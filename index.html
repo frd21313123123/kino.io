@@ -38,19 +38,11 @@
 
     <h2>Видео:</h2>
     <div class="video-container" id="youtube-container">
-        <iframe id="youtube-video" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        <iframe id="youtube-video" src="https://www.youtube.com/embed/-jhau7d9qeE?enablejsapi=1&autoplay=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
     </div>
     <div class="video-container" id="vk-container" style="display:none;">
         <iframe id="vk-video" src="https://vk.com/video_ext.php?oid=-56028029&id=456250112&hash=a3c6459a16c768da" frameborder="0" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen></iframe>
     </div>
-
-    <!-- Add your YouTube video links here -->
-    <script>
-        const videoLinks = [
-            "https://www.youtube.com/watch?v=WuNiQClgqXg",
-            "https://www.youtube.com/watch?v=aQIFUD3M3Hk"
-        ];
-    </script>
 
     <script>
         // YouTube IFrame API
@@ -60,40 +52,18 @@
         firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
         var youtubePlayer;
-        var currentVideoIndex = 0;
-
         function onYouTubeIframeAPIReady() {
             youtubePlayer = new YT.Player('youtube-video', {
                 events: {
-                    'onReady': onPlayerReady,
                     'onStateChange': onPlayerStateChange
                 }
             });
         }
 
-        function onPlayerReady(event) {
-            loadVideoByIndex(currentVideoIndex);
-        }
-
-        function loadVideoByIndex(index) {
-            const videoId = extractVideoId(videoLinks[index]);
-            youtubePlayer.loadVideoById(videoId);
-        }
-
-        function extractVideoId(url) {
-            const urlObj = new URL(url);
-            return urlObj.searchParams.get("v");
-        }
-
         function onPlayerStateChange(event) {
             if (event.data == YT.PlayerState.ENDED) {
-                currentVideoIndex++;
-                if (currentVideoIndex < videoLinks.length) {
-                    loadVideoByIndex(currentVideoIndex);
-                } else {
-                    document.getElementById('youtube-container').style.display = 'none';
-                    document.getElementById('vk-container').style.display = 'block';
-                }
+                document.getElementById('youtube-container').style.display = 'none';
+                document.getElementById('vk-container').style.display = 'block';
             }
         }
     </script>
