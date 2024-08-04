@@ -3,9 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Привет, мир!</title>
+    <title>Мой сайт с рекламой Яндекс</title>
 </head>
 <body>
-    <h1>Привет, мир!</h1>
+    <h1>Добро пожаловать на мой сайт</h1>
+    <p>Здесь будет размещена реклама Яндекс:</p>
+
+    <!-- Yandex.RTB R-A-10931483-1 -->
+    <div id="yandex_rtb_R-A-10931483-1"></div>
+    <script>
+    window.yaContextCb.push(() => {
+        Ya.Context.AdvManager.render({
+            "blockId": "R-A-10931483-1",
+            "renderTo": "yandex_rtb_R-A-10931483-1"
+        })
+    })
+    </script>
 </body>
 </html>
