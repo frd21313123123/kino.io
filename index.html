@@ -32,9 +32,10 @@
         })
     })
     </script>
-    
+
+    <h2>Видео:</h2>
     <div class="video-container" id="youtube-container">
-        <iframe id="youtube-video" src="https://www.youtube.com/embed/-jhau7d9qeE?enablejsapi=1&autoplay=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        <iframe id="youtube-video" src="https://www.youtube.com/embed/WuNiQClgqXg?enablejsapi=1&autoplay=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
     </div>
 
     <script>
@@ -45,6 +46,13 @@
         firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
         var youtubePlayer;
+        var videoIndex = 0;
+        var videoUrls = [
+            "https://www.youtube.com/embed/WuNiQClgqXg?enablejsapi=1&autoplay=1",
+            "https://www.youtube.com/embed/aQIFUD3M3Hk?enablejsapi=1&autoplay=1",
+            "https://www.youtube.com/embed/-jhau7d9qeE?enablejsapi=1&autoplay=1"
+        ];
+
         function onYouTubeIframeAPIReady() {
             youtubePlayer = new YT.Player('youtube-video', {
                 events: {
@@ -55,7 +63,12 @@
 
         function onPlayerStateChange(event) {
             if (event.data == YT.PlayerState.ENDED) {
-                window.location.href = 'https://vk.com/video-220018529_456239321';
+                videoIndex++;
+                if (videoIndex < videoUrls.length) {
+                    youtubePlayer.loadVideoByUrl(videoUrls[videoIndex]);
+                } else {
+                    window.location.href = 'https://vk.com/video-220018529_456239321?autoplay=1&fullscreen=1';
+                }
             }
         }
     </script>
