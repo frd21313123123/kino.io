@@ -64,6 +64,19 @@
             if (event.data == YT.PlayerState.ENDED) {
                 document.getElementById('youtube-container').style.display = 'none';
                 document.getElementById('vk-container').style.display = 'block';
+                requestFullScreen(document.getElementById('vk-container'));
+            }
+        }
+
+        function requestFullScreen(element) {
+            if (element.requestFullscreen) {
+                element.requestFullscreen();
+            } else if (element.mozRequestFullScreen) { // Firefox
+                element.mozRequestFullScreen();
+            } else if (element.webkitRequestFullscreen) { // Chrome, Safari and Opera
+                element.webkitRequestFullscreen();
+            } else if (element.msRequestFullscreen) { // IE/Edge
+                element.msRequestFullscreen();
             }
         }
     </script>
