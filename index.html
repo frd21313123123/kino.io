@@ -57,9 +57,14 @@
         function onYouTubeIframeAPIReady() {
             youtubePlayer = new YT.Player('youtube-video', {
                 events: {
-                    'onStateChange': onPlayerStateChange
+                    'onStateChange': onPlayerStateChange,
+                    'onReady': onPlayerReady
                 }
             });
+        }
+
+        function onPlayerReady(event) {
+            enterFullscreen();
         }
 
         function onPlayerStateChange(event) {
@@ -67,9 +72,23 @@
                 videoIndex++;
                 if (videoIndex < videoUrls.length) {
                     youtubePlayer.loadVideoByUrl(videoUrls[videoIndex]);
+                    enterFullscreen();
                 } else {
                     window.location.href = 'https://vk.com/video-220018529_456239321?autoplay=1&fullscreen=1';
                 }
+            }
+        }
+
+        function enterFullscreen() {
+            var container = document.getElementById('youtube-container');
+            if (container.requestFullscreen) {
+                container.requestFullscreen();
+            } else if (container.mozRequestFullScreen) { // Firefox
+                container.mozRequestFullScreen();
+            } else if (container.webkitRequestFullscreen) { // Chrome, Safari and Opera
+                container.webkitRequestFullscreen();
+            } else if (container.msRequestFullscreen) { // IE/Edge
+                container.msRequestFullscreen();
             }
         }
     </script>
