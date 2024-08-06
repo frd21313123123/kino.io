@@ -1,99 +1,26 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Мой сайт с видео и рекламой Яндекс</title>
-    <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            height: 100%;
-            width: 100%;
-            background-color: black;
-            color: white;
+    <title>Сайт 1</title>
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        function redirectToSite() {
+            window.location.href = "site2.html";
         }
-        .video-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
+
+        function showUnderDevelopmentMessage() {
+            alert("Сайт в разработке.");
         }
-        .video-container iframe {
-            width: 100%;
-            height: 100%;
-        }
-    </style>
+    </script>
 </head>
 <body>
-    <!-- Yandex.RTB R-A-10931483-1 -->
-    <div id="yandex_rtb_R-A-10931483-1"></div>
-    <script>
-    window.yaContextCb.push(() => {
-        Ya.Context.AdvManager.render({
-            "blockId": "R-A-10931483-1",
-            "renderTo": "yandex_rtb_R-A-10931483-1"
-        })
-    })
-    </script>
-
-    <div class="video-container" id="youtube-container">
-        <iframe id="youtube-video" src="https://www.youtube.com/embed/7_sangS0HYw?enablejsapi=1&autoplay=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    <div class="container">
+        <h1>Добро пожаловать на Сайт 1</h1>
+        <button class="btn" onclick="redirectToSite()">Перейти на Сайт 2</button>
+        <button class="btn" onclick="showUnderDevelopmentMessage()">Сайт 3</button>
+        <button class="btn" onclick="showUnderDevelopmentMessage()">Сайт 4</button>
     </div>
-
-    <script>
-        // YouTube IFrame API
-        var tag = document.createElement('script');
-        tag.src = "https://www.youtube.com/iframe_api";
-        var firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-        var youtubePlayer;
-        var videoIndex = 0;
-        var videoUrls = [
-            "https://www.youtube.com/embed/7_sangS0HYw?enablejsapi=1&autoplay=1"
-        ];
-
-        function onYouTubeIframeAPIReady() {
-            youtubePlayer = new YT.Player('youtube-video', {
-                events: {
-                    'onReady': onPlayerReady,
-                    'onStateChange': onPlayerStateChange
-                }
-            });
-        }
-
-        function onPlayerReady(event) {
-            enterFullscreen();
-        }
-
-        function onPlayerStateChange(event) {
-            if (event.data == YT.PlayerState.ENDED) {
-                videoIndex++;
-                if (videoIndex < videoUrls.length) {
-                    youtubePlayer.loadVideoByUrl(videoUrls[videoIndex]);
-                    enterFullscreen();
-                } else {
-                    window.location.href = 'https://vk.com/video-220018529_456241609?autoplay=1&fullscreen=1';
-                }
-            }
-        }
-
-        function enterFullscreen() {
-            var container = document.getElementById('youtube-container');
-            if (container.requestFullscreen) {
-                container.requestFullscreen();
-            } else if (container.mozRequestFullScreen) { // Firefox
-                container.mozRequestFullScreen();
-            } else if (container.webkitRequestFullscreen) { // Chrome, Safari and Opera
-                container.webkitRequestFullscreen();
-            } else if (container.msRequestFullscreen) { // IE/Edge
-                container.msRequestFullscreen();
-            }
-        }
-    </script>
 </body>
 </html>
