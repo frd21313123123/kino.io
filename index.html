@@ -91,11 +91,12 @@
 
             yesButton.addEventListener("mouseover", moveButton);
             noButton.addEventListener("click", () => {
-                alert("Я не знал что ты гей");
+                alert("Я так и знал!");
                 messageElement.textContent = "Натурал?";
             });
             yesButton.addEventListener("click", () => {
-                alert("Я так и знал");
+                alert("Да ты гонишь!");
+                messageElement.textContent = "Натурал?";
             });
 
             moveButton();
