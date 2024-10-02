@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Сосал?</title>
+    <title>Интерактивный вопрос</title>
     <style>
         body {
             display: flex;
@@ -37,52 +37,69 @@
             left: 50%;
             transform: translateX(-50%);
         }
+        #mobile-message {
+            display: none;
+            text-align: center;
+            font-size: 18px;
+            padding: 20px;
+        }
     </style>
 </head>
 <body>
-    <div id="message">Сосал?</div>
-    <div class="button-container">
-        <button id="yes-button">Нет</button>
-        <button id="no-button">Да</button>
+    <div id="desktop-content">
+        <div id="message">Сосал?</div>
+        <div class="button-container">
+            <button id="yes-button">Нет</button>
+            <button id="no-button">Да</button>
+        </div>
+    </div>
+    <div id="mobile-message">
+        Извините, эта игра доступна только на десктопных устройствах.
     </div>
     <script>
-        const yesButton = document.getElementById("yes-button");
-        const noButton = document.getElementById("no-button");
-        const container = document.querySelector('.button-container');
-
-        function moveButton() {
-            const containerRect = container.getBoundingClientRect();
-            const buttonRect = yesButton.getBoundingClientRect();
-            const noButtonRect = noButton.getBoundingClientRect();
-
-            let maxX = containerRect.width - buttonRect.width;
-            let maxY = containerRect.height - buttonRect.height;
-
-            let randomX, randomY;
-            do {
-                randomX = Math.floor(Math.random() * maxX);
-                randomY = Math.floor(Math.random() * maxY);
-            } while (
-                randomX < noButtonRect.width * 1.5 &&
-                randomY > maxY - noButtonRect.height * 2
-            );
-            
-            yesButton.style.left = randomX + "px";
-            yesButton.style.top = randomY + "px";
+        function isMobile() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
         }
 
-        yesButton.addEventListener("mouseover", moveButton);
+        if (isMobile()) {
+            document.getElementById('desktop-content').style.display = 'none';
+            document.getElementById('mobile-message').style.display = 'block';
+        } else {
+            const yesButton = document.getElementById("yes-button");
+            const noButton = document.getElementById("no-button");
+            const container = document.querySelector('.button-container');
+            const messageElement = document.getElementById("message");
 
-        noButton.addEventListener("click", () => {
-            alert("Вы выбрали 'Нет'");
-        });
+            function moveButton() {
+                const containerRect = container.getBoundingClientRect();
+                const buttonRect = yesButton.getBoundingClientRect();
+                const noButtonRect = noButton.getBoundingClientRect();
+                let maxX = containerRect.width - buttonRect.width;
+                let maxY = containerRect.height - buttonRect.height;
+                let randomX, randomY;
+                do {
+                    randomX = Math.floor(Math.random() * maxX);
+                    randomY = Math.floor(Math.random() * maxY);
+                } while (
+                    randomX < noButtonRect.width * 1.5 &&
+                    randomY > maxY - noButtonRect.height * 2
+                );
+                
+                yesButton.style.left = randomX + "px";
+                yesButton.style.top = randomY + "px";
+            }
 
-        yesButton.addEventListener("click", () => {
-            alert("Поздравляем! Вам удалось нажать 'Да'");
-        });
+            yesButton.addEventListener("mouseover", moveButton);
+            noButton.addEventListener("click", () => {
+                alert("Я не знал что ты гей");
+                messageElement.textContent = "Натурал?";
+            });
+            yesButton.addEventListener("click", () => {
+                alert("Я так и знал");
+            });
 
-        // Начальное позиционирование кнопки "Да"
-        moveButton();
+            moveButton();
+        }
     </script>
 </body>
 </html>
