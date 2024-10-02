@@ -3,126 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gemini Чат</title>
+    <title>Сосал?</title>
     <style>
         body {
-            font-family: sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 20px auto;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        h1 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        form {
             display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        #message {
+            font-size: 24px;
             margin-bottom: 20px;
         }
-
-        textarea {
-            flex: 1;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            resize: vertical;
+        .button-container {
+            position: relative;
+            width: 100%;
+            height: 60vh;
         }
-
         button {
             padding: 10px 20px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
+            font-size: 16px;
             cursor: pointer;
-            margin-left: 10px;
         }
-
-        .chat-history {
-            border: 1px solid #ccc;
-            padding: 10px;
-            border-radius: 5px;
-            min-height: 300px;
-            max-height: 500px;
-            overflow-y: auto;
+        #yes-button {
+            position: absolute;
         }
-
-        .message {
-            margin-bottom: 10px;
-            padding: 10px;
-            border-radius: 5px;
-        }
-
-        .user {
-            background-color: #eee;
-        }
-
-        .bot {
-            background-color: #007bff;
-            color: #fff;
+        #no-button {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Gemini Чат</h1>
-        <div class="chat-history" id="chat-history">
-            </div>
-        <form method="POST">
-            <textarea name="prompt" placeholder="Введите ваш запрос..."></textarea>
-            <button type="submit">Отправить</button>
-        </form>
+    <div id="message">Сосал?</div>
+    <div class="button-container">
+        <button id="yes-button">Нет</button>
+        <button id="no-button">Да</button>
     </div>
-
     <script>
-        const form = document.querySelector('form');
-        const chatHistory = document.getElementById('chat-history');
+        const yesButton = document.getElementById("yes-button");
+        const noButton = document.getElementById("no-button");
+        const container = document.querySelector('.button-container');
 
-        form.addEventListener('submit', async (event) => {
-            event.preventDefault(); // Предотвращаем стандартную отправку формы
+        function moveButton() {
+            const containerRect = container.getBoundingClientRect();
+            const buttonRect = yesButton.getBoundingClientRect();
+            const noButtonRect = noButton.getBoundingClientRect();
 
-            const prompt = event.target.prompt.value;
-            event.target.prompt.value = ''; // Очищаем поле ввода
+            let maxX = containerRect.width - buttonRect.width;
+            let maxY = containerRect.height - buttonRect.height;
 
-            // Добавляем сообщение пользователя в чат
-            addMessageToHistory('user', prompt);
+            let randomX, randomY;
+            do {
+                randomX = Math.floor(Math.random() * maxX);
+                randomY = Math.floor(Math.random() * maxY);
+            } while (
+                randomX < noButtonRect.width * 1.5 &&
+                randomY > maxY - noButtonRect.height * 2
+            );
+            
+            yesButton.style.left = randomX + "px";
+            yesButton.style.top = randomY + "px";
+        }
 
-            // Отправляем запрос на сервер
-            const response = await fetch('/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: `prompt=${prompt}`
-            });
+        yesButton.addEventListener("mouseover", moveButton);
 
-            // Получаем ответ от сервера
-            const data = await response.text();
-
-            // Добавляем ответ бота в чат
-            addMessageToHistory('bot', data);
+        noButton.addEventListener("click", () => {
+            alert("Вы выбрали 'Нет'");
         });
 
-        function addMessageToHistory(type, message) {
-            const messageElement = document.createElement('div');
-            messageElement.classList.add('message', type);
-            messageElement.textContent = message;
-            chatHistory.appendChild(messageElement);
+        yesButton.addEventListener("click", () => {
+            alert("Поздравляем! Вам удалось нажать 'Да'");
+        });
 
-            // Прокручиваем чат вниз
-            chatHistory.scrollTop = chatHistory.scrollHeight;
-        }
+        // Начальное позиционирование кнопки "Да"
+        moveButton();
     </script>
 </body>
 </html>
