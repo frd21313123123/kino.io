@@ -1,105 +1,43 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Интерактивный вопрос</title>
+    <title>Сосал?</title>
     <style>
         body {
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
+            background-color: #f0f0f0;
             margin: 0;
             font-family: Arial, sans-serif;
         }
-        #message {
-            font-size: 24px;
-            margin-bottom: 20px;
-        }
-        .button-container {
-            position: relative;
-            width: 100%;
-            height: 60vh;
-        }
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-        #yes-button {
-            position: absolute;
-        }
-        #no-button {
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-        #mobile-message {
-            display: none;
+        .container {
             text-align: center;
-            font-size: 18px;
-            padding: 20px;
+        }
+        #noButton {
+            position: absolute;
         }
     </style>
 </head>
 <body>
-    <div id="desktop-content">
-        <div id="message">Сосал?</div>
-        <div class="button-container">
-            <button id="yes-button">Нет</button>
-            <button id="no-button">Да</button>
-        </div>
+    <div class="container">
+        <h1>Сосал?</h1>
+        <button id="yesButton">Да</button>
+        <button id="noButton">Нет</button>
     </div>
-    <div id="mobile-message">
-        Извините, эта игра доступна только на десктопных устройствах.
-    </div>
+
     <script>
-        function isMobile() {
-            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-        }
+        const noButton = document.getElementById('noButton');
 
-        if (isMobile()) {
-            document.getElementById('desktop-content').style.display = 'none';
-            document.getElementById('mobile-message').style.display = 'block';
-        } else {
-            const yesButton = document.getElementById("yes-button");
-            const noButton = document.getElementById("no-button");
-            const container = document.querySelector('.button-container');
-            const messageElement = document.getElementById("message");
-
-            function moveButton() {
-                const containerRect = container.getBoundingClientRect();
-                const buttonRect = yesButton.getBoundingClientRect();
-                const noButtonRect = noButton.getBoundingClientRect();
-                let maxX = containerRect.width - buttonRect.width;
-                let maxY = containerRect.height - buttonRect.height;
-                let randomX, randomY;
-                do {
-                    randomX = Math.floor(Math.random() * maxX);
-                    randomY = Math.floor(Math.random() * maxY);
-                } while (
-                    randomX < noButtonRect.width * 1.5 &&
-                    randomY > maxY - noButtonRect.height * 2
-                );
-                
-                yesButton.style.left = randomX + "px";
-                yesButton.style.top = randomY + "px";
-            }
-
-            yesButton.addEventListener("mouseover", moveButton);
-            noButton.addEventListener("click", () => {
-                alert("Я так и знал!");
-            });
-            yesButton.addEventListener("click", () => {
-                alert("Я не знал что ты гей");
-				messageElement.textContent = "Натурал?";
-            });
-
-            moveButton();
-        }
+        noButton.addEventListener('mouseenter', () => {
+            const x = Math.random() * (window.innerWidth - noButton.clientWidth);
+            const y = Math.random() * (window.innerHeight - noButton.clientHeight);
+            noButton.style.left = `${x}px`;
+            noButton.style.top = `${y}px`;
+        });
     </script>
 </body>
 </html>
